@@ -93,3 +93,9 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .text-shadow-glow {
+    text-shadow: 0 0 8px rgba(42, 111, 181, 0.6);
+  }
+}

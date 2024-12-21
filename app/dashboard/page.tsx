@@ -1,8 +1,12 @@
+'use client'
+
+import { useState } from "react"
 import { ModulesCarousel } from "@/app/components/dashboard/modules-carousel"
 import { AttendanceChart } from "@/app/components/dashboard/attendance-chart"
 import { CalendarView } from "@/app/components/dashboard/calendar-view"
 import { DisplayScreen } from "@/app/components/dashboard/display-screen"
 import { UpcomingLectures } from "@/app/components/dashboard/upcoming-lectures"
+import { Volume2, VolumeX } from "lucide-react"
 
 const containerStyle = {
   wordBreak: 'normal' as const,
@@ -13,6 +17,8 @@ const containerStyle = {
 }
 
 export default function DashboardPage() {
+  const [isMuted, setIsMuted] = useState(true)
+
   return (
     <main className="p-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -71,9 +77,29 @@ export default function DashboardPage() {
             }}
           >
             <div className="pb-2">
-              <h2 className="text-white text-lg font-semibold flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                VU Live
+              <h2 className="text-white text-lg font-semibold flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                  VU Live
+                </div>
+                <button
+                  onClick={() => {
+                    setIsMuted(prevMuted => {
+                      const video = document.querySelector('video')
+                      if (video) {
+                        video.muted = !prevMuted
+                      }
+                      return !prevMuted
+                    })
+                  }}
+                  className="p-1 hover:bg-white/10 rounded-full transition-colors"
+                >
+                  {isMuted ? (
+                    <VolumeX className="w-4 h-4 text-white/80" />
+                  ) : (
+                    <Volume2 className="w-4 h-4 text-white/80" />
+                  )}
+                </button>
               </h2>
             </div>
             <div className="h-[calc(100%-40px)]">
@@ -89,7 +115,7 @@ export default function DashboardPage() {
             <div className="pb-2">
               <h2 className="text-[#2a6fb5] text-lg font-semibold">Calendar</h2>
             </div>
-            <div className="h-[calc(100%-40px)] overflow-y-auto">
+            <div className="h-[calc(100%-40px)]">
               <CalendarView />
             </div>
           </div>

@@ -1,7 +1,9 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { Home, BookOpen, Users, Calendar, FileText, GraduationCap, PieChart, DollarSign, Video, Vote, MessageCircle, FileEdit, Settings, LogOut } from 'lucide-react'
+import { Home, BookOpen, Users, Calendar, FileText, GraduationCap, PieChart, DollarSign, Video, Vote, MessageCircle, FileEdit, Settings, LogOut, Sun, Moon } from 'lucide-react'
+import { useTheme } from "next-themes"
+import { useEffect, useState } from 'react'
 
 import { Logo } from "@/app/components/ui/logo"
 import { NavItem } from "@/app/components/navigation/nav-item"
@@ -30,10 +32,51 @@ const bottomNavigation = [
 
 export function Sidebar() {
   const pathname = usePathname()
+  const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  // After mounting, we have access to the theme
+  useEffect(() => setMounted(true), [])
+
+  if (!mounted) {
+    return (
+      <div className="flex h-full w-64 flex-col fixed left-0 top-0 border-r bg-background">
+        <div className="flex h-16 shrink-0 items-center border-b px-4">
+          <Logo />
+        </div>
+        <ScrollArea className="flex-1">
+          <nav className="space-y-1 px-2 py-4">
+            {mainNavigation.map((item) => (
+              <NavItem
+                key={item.name}
+                href={item.href}
+                icon={item.icon}
+                label={item.name}
+                isActive={pathname === item.href}
+              />
+            ))}
+          </nav>
+        </ScrollArea>
+        <div className="shrink-0 mt-auto border-t">
+          <nav className="px-2 py-4 space-y-1">
+            {bottomNavigation.map((item) => (
+              <NavItem
+                key={item.name}
+                href={item.href}
+                icon={item.icon}
+                label={item.name}
+                isActive={pathname === item.href}
+              />
+            ))}
+          </nav>
+        </div>
+      </div>
+    )
+  }
   
   return (
     <div className="flex h-full w-64 flex-col fixed left-0 top-0 border-r bg-background">
-      <div className="flex h-20 shrink-0 items-center border-b px-4">
+      <div className="flex h-16 shrink-0 items-center border-b px-4">
         <Logo />
       </div>
       <ScrollArea className="flex-1">

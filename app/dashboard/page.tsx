@@ -2,6 +2,7 @@ import { ModulesCarousel } from "@/app/components/dashboard/modules-carousel"
 import { AttendanceChart } from "@/app/components/dashboard/attendance-chart"
 import { CalendarView } from "@/app/components/dashboard/calendar-view"
 import { DisplayScreen } from "@/app/components/dashboard/display-screen"
+import { UpcomingLectures } from "@/app/components/dashboard/upcoming-lectures"
 
 const containerStyle = {
   wordBreak: 'normal' as const,
@@ -29,40 +30,30 @@ export default function DashboardPage() {
           </div>
 
           {/* Charts and Announcements Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Attendance Chart */}
             <div 
-              className="w-full bg-white rounded-[3px] p-4 block md:block h-[350px]"
+              className="w-full bg-white rounded-[3px] p-4 block md:block h-[300px]"
               style={containerStyle}
             >
               <div className="pb-2">
                 <h2 className="text-[#2a6fb5] text-lg font-semibold">Attendance Overview</h2>
               </div>
-              <div className="h-[calc(100%-40px)] overflow-y-auto">
+              <div className="h-[calc(100%-40px)]">
                 <AttendanceChart />
               </div>
             </div>
 
-            {/* Announcements */}
+            {/* Upcoming Lectures */}
             <div 
-              className="w-full bg-white rounded-[3px] p-4 block md:block h-[350px]"
+              className="w-full bg-white rounded-[3px] p-4 block md:block h-[300px]"
               style={containerStyle}
             >
               <div className="pb-2">
-                <h2 className="text-[#2a6fb5] text-lg font-semibold">School Announcements</h2>
+                <h2 className="text-[#2a6fb5] text-lg font-semibold">Upcoming Lectures</h2>
               </div>
-              <div className="space-y-3 h-[calc(100%-40px)] overflow-y-auto">
-                <div className="p-3 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-muted-foreground">No new announcements</p>
-                </div>
-                <div className="p-3 bg-gray-50 rounded-lg">
-                  <h3 className="font-medium text-sm mb-1 text-[#2a6fb5]">Tip</h3>
-                  <p className="text-sm text-muted-foreground">Stay tuned for important school announcements and updates here.</p>
-                </div>
-                <div className="p-3 bg-gray-50 rounded-lg">
-                  <h3 className="font-medium text-sm mb-1 text-[#2a6fb5]">Reminder</h3>
-                  <p className="text-sm text-muted-foreground">Check your attendance regularly to maintain the required 75% attendance rate.</p>
-                </div>
+              <div className="h-[calc(100%-40px)] overflow-y-auto">
+                <UpcomingLectures />
               </div>
             </div>
           </div>
@@ -92,7 +83,7 @@ export default function DashboardPage() {
 
           {/* Calendar */}
           <div 
-            className="w-full bg-white rounded-[3px] p-4 block md:block h-[400px]"
+            className="w-full bg-white rounded-[3px] p-4 block md:block h-[300px]"
             style={containerStyle}
           >
             <div className="pb-2">

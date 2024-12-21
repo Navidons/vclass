@@ -18,27 +18,28 @@ const modules = [
 
 export function ModulesCarousel() {
   return (
-    <div className="w-full">
-      <h2 className="mb-4 text-xl font-semibold">My Modules</h2>
-      <Carousel>
-        <CarouselContent>
-          {modules.map((module) => (
-            <CarouselItem key={module.id} className="md:basis-1/2 lg:basis-1/3">
-              <Card>
+    <Carousel className="w-full">
+      <CarouselContent>
+        {modules.map((module) => (
+          <CarouselItem key={module.id} className="sm:basis-1/2 lg:basis-1/3">
+            <div className="p-1">
+              <Card className="h-[150px]">
                 <CardHeader>
                   <CardTitle className="text-lg">{module.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-500">Code: {module.code}</p>
+                  <div className="flex flex-col space-y-2">
+                    <p className="text-sm text-gray-500">Code: {module.code}</p>
+                    <p className="text-sm text-gray-500">Next Class: Tomorrow</p>
+                  </div>
                 </CardContent>
               </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    </div>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
   )
 }
-

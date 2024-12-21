@@ -10,6 +10,9 @@ export default {
   theme: {
   	extend: {
   		colors: {
+        moduleCard: '#df292c',
+        headingBlue: '#2a6fb5',
+        textColor: 'rgba(0,0,0,0.25)',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -21,12 +24,12 @@ export default {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
+  				DEFAULT: '#2a6fb5',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
+  				DEFAULT: '#df292c',
+  				foreground: 'white'
   			},
   			muted: {
   				DEFAULT: 'hsl(var(--muted))',

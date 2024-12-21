@@ -22,17 +22,17 @@ const upcomingLectures = [
 
 export function CalendarView() {
   return (
-    <div className="space-y-4">
-      <Card>
+    <div className="space-y-6">
+      <Card className="w-full">
         <CardHeader>
           <CardTitle>Calendar</CardTitle>
         </CardHeader>
         <CardContent>
-          <Calendar mode="single" />
+          <Calendar mode="single" className="w-full" />
         </CardContent>
       </Card>
       
-      <Card>
+      <Card className="w-full">
         <CardHeader>
           <CardTitle>Upcoming Lectures</CardTitle>
         </CardHeader>
@@ -41,12 +41,13 @@ export function CalendarView() {
             {upcomingLectures.map((lecture) => (
               <div
                 key={lecture.id}
-                className="flex flex-col space-y-1 border-b pb-3 last:border-0"
+                className="p-4 bg-gray-50 rounded-lg space-y-2"
               >
                 <h3 className="font-medium">{lecture.title}</h3>
-                <p className="text-sm text-gray-500">
-                  {lecture.time} - {lecture.venue}
-                </p>
+                <div className="text-sm text-gray-500 space-y-1">
+                  <p>Time: {lecture.time}</p>
+                  <p>Venue: {lecture.venue}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -55,4 +56,3 @@ export function CalendarView() {
     </div>
   )
 }
-

@@ -19,7 +19,7 @@ export function Header({ studentName, registrationNumber }: HeaderProps) {
         </h2>
       </div>
       <Avatar>
-        <AvatarImage src="/placeholder-user.jpg" />
+        <AvatarImage src="/profile-pic.jpg" />
         <AvatarFallback>VS</AvatarFallback>
       </Avatar>
     </div>

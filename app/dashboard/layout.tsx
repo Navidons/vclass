@@ -11,7 +11,7 @@ export default function DashboardLayout({
       <Sidebar />
       <div className="pl-64">
         <div className="fixed top-0 right-0 left-64 z-10">
-          <Header studentName="John Doe" registrationNumber="VU/2024/001" />
+          <Header studentName="SSEBBOWA RICHARD KINTU" registrationNumber="VU-BCS-2409-1302" />
         </div>
         <div className="pt-16">
           {children}

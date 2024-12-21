@@ -1,4 +1,3 @@
-import { Header } from "@/app/components/dashboard/header"
 import { ModulesCarousel } from "@/app/components/dashboard/modules-carousel"
 import { AttendanceChart } from "@/app/components/dashboard/attendance-chart"
 import { CalendarView } from "@/app/components/dashboard/calendar-view"
@@ -6,38 +5,55 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function DashboardPage() {
   return (
-    <>
-      <Header 
-        studentName="SSEBBOWA RICHARD KINTU" 
-        registrationNumber="VU-BCS-2109-1302" 
-      />
-      <main className="p-4">
-        <div className="grid grid-cols-12 gap-4">
-          {/* Main content area - 8 columns */}
-          <div className="col-span-8 space-y-4">
-            <ModulesCarousel />
-            <div className="grid grid-cols-2 gap-4">
-              <AttendanceChart />
-              <Card>
-                <CardHeader>
-                  <CardTitle>School Announcements</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-sm text-gray-500">
-                    No new announcements
+    <main className="p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main content area - 2 columns */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Modules Section */}
+          <Card className="w-full">
+            <CardHeader>
+              <CardTitle>My Modules</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ModulesCarousel />
+            </CardContent>
+          </Card>
+
+          {/* Charts and Announcements Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="w-full h-[400px]">
+              <CardHeader>
+                <CardTitle>Attendance Overview</CardTitle>
+              </CardHeader>
+              <CardContent className="h-[calc(400px-4rem)]">
+                <AttendanceChart />
+              </CardContent>
+            </Card>
+
+            <Card className="w-full h-[400px]">
+              <CardHeader>
+                <CardTitle>School Announcements</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <p className="text-sm text-gray-500">No new announcements</p>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-          
-          {/* Right sidebar - 4 columns */}
-          <div className="col-span-4">
-            <CalendarView />
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <h3 className="font-medium text-sm mb-1">Tip</h3>
+                    <p className="text-sm text-gray-500">Stay tuned for important school announcements and updates here.</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
-      </main>
-    </>
+
+        {/* Right sidebar - Calendar */}
+        <div className="lg:col-span-1">
+          <CalendarView />
+        </div>
+      </div>
+    </main>
   )
 }
-

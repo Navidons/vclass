@@ -7,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 
 const modules = [
   { id: 1, name: "Introduction to Computer Science", code: "CS101" },
@@ -19,17 +19,19 @@ const modules = [
 export function ModulesCarousel() {
   return (
     <div className="w-full">
-      <h2 className="mb-4 text-xl font-semibold">My Modules</h2>
+      <h2 className="mb-4 text-xl font-semibold text-[#2a6fb5]">My Modules</h2>
       <Carousel>
         <CarouselContent>
           {modules.map((module) => (
             <CarouselItem key={module.id} className="md:basis-1/2 lg:basis-1/3">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">{module.name}</CardTitle>
+                  <CardTitle className="text-lg text-[#2a6fb5]">{module.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-500">Code: {module.code}</p>
+                  <CardDescription>
+                    <p className="text-sm text-gray-500">Code: {module.code}</p>
+                  </CardDescription>
                 </CardContent>
               </Card>
             </CarouselItem>
@@ -41,4 +43,3 @@ export function ModulesCarousel() {
     </div>
   )
 }
-

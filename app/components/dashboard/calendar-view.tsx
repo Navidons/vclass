@@ -1,7 +1,6 @@
 'use client'
 
 import { Calendar } from "@/components/ui/calendar"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const upcomingLectures = [
   {
@@ -23,36 +22,29 @@ const upcomingLectures = [
 export function CalendarView() {
   return (
     <div className="space-y-6">
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>Calendar</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Calendar mode="single" className="w-full" />
-        </CardContent>
-      </Card>
+      <div className="w-full">
+        <Calendar mode="single" className="w-full" />
+      </div>
       
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>Upcoming Lectures</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {upcomingLectures.map((lecture) => (
-              <div
-                key={lecture.id}
-                className="p-4 bg-gray-50 rounded-lg space-y-2"
-              >
-                <h3 className="font-medium">{lecture.title}</h3>
-                <div className="text-sm text-gray-500 space-y-1">
-                  <p>Time: {lecture.time}</p>
-                  <p>Venue: {lecture.venue}</p>
-                </div>
+      <div className="w-full bg-white rounded-[3px] p-5 block md:block">
+        <div className="pb-3">
+          <h2 className="text-[#2a6fb5] text-xl font-semibold">Upcoming Lectures</h2>
+        </div>
+        <div className="space-y-4">
+          {upcomingLectures.map((lecture) => (
+            <div
+              key={lecture.id}
+              className="p-4 bg-gray-50 rounded-lg space-y-2"
+            >
+              <h3 className="font-medium text-[#2a6fb5]">{lecture.title}</h3>
+              <div className="text-sm text-muted-foreground space-y-1">
+                <p>Time: {lecture.time}</p>
+                <p>Venue: {lecture.venue}</p>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }

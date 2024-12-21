@@ -17,22 +17,43 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { Progress } from "@/components/ui/progress"
+import { Progress } from "../../../components/ui/progress"
+import { Gauge } from "../../../components/ui/gauge"
+import { CheckCircle2, AlertCircle, XCircle } from "lucide-react"
 
-const data = [
-  { day: 'Mon', attendance: 85 },
-  { day: 'Tue', attendance: 90 },
-  { day: 'Wed', attendance: 95 },
-  { day: 'Thu', attendance: 88 },
-  { day: 'Fri', attendance: 92 },
-  { day: 'Sat', attendance: 87 },
-  { day: 'Sun', attendance: 91 },
+const attendanceData = [
+  { day: "Mon", value: 100, status: "Present" },
+  { day: "Tue", value: 100, status: "Present" },
+  { day: "Wed", value: 0, status: "Absent" },
+  { day: "Thu", value: 100, status: "Present" },
+  { day: "Fri", value: 50, status: "Late" },
 ]
 
-// Calculate average attendance
-const averageAttendance = Math.round(
-  data.reduce((acc, curr) => acc + curr.attendance, 0) / data.length
-)
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case "Present":
+      return "text-green-600"
+    case "Late":
+      return "text-yellow-600"
+    case "Absent":
+      return "text-red-600"
+    default:
+      return "text-gray-600"
+  }
+}
+
+const getStatusIcon = (status: string) => {
+  switch (status) {
+    case "Present":
+      return <CheckCircle2 className="h-3 w-3 text-green-600" />
+    case "Late":
+      return <AlertCircle className="h-3 w-3 text-yellow-600" />
+    case "Absent":
+      return <XCircle className="h-3 w-3 text-red-600" />
+    default:
+      return null
+  }
+}
 
 function CustomTooltip({ active, payload }: any) {
   if (active && payload && payload.length) {
@@ -137,7 +158,7 @@ function SpeedometerGauge({ value }: { value: number }) {
 
         {/* Value Display */}
         <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-center bg-white rounded-lg px-4 py-1 shadow-sm border">
-          <div className="text-3xl font-bold text-gray-900 mb-0.5 tabular-nums">{value}%</div>
+          <div className="text-3xl font-bold text-[#2a6fb5] mb-0.5 tabular-nums">{value}%</div>
           <div className={`text-sm font-medium ${getStatusColor()}`}>
             {getStatusText()}
           </div>
@@ -158,105 +179,108 @@ function SpeedometerGauge({ value }: { value: number }) {
 }
 
 export function AttendanceChart() {
-  return (
-    <div className="h-full w-full">
-      <Carousel className="h-full">
-        <CarouselContent className="h-full">
-          {/* Area Chart */}
-          <CarouselItem className="h-full">
-            <div className="h-full w-full p-6">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h3 className="text-base font-semibold text-gray-900">Weekly Attendance</h3>
-                  <p className="text-sm text-gray-500 mt-1">Last 7 days performance</p>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full mr-2 opacity-20"></div>
-                    <span className="text-sm text-gray-600">Range</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
-                    <span className="text-sm text-gray-600">Attendance</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="h-[calc(100%-5rem)]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart
-                    data={data}
-                    margin={{ top: 10, right: 10, left: 0, bottom: 20 }}
-                  >
-                    <defs>
-                      <linearGradient id="colorAttendance" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
-                    <XAxis 
-                      dataKey="day" 
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: '#6b7280', fontSize: 12 }}
-                      dy={10}
-                    />
-                    <YAxis
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: '#6b7280', fontSize: 12 }}
-                      domain={[0, 100]}
-                      tickFormatter={(value) => `${value}%`}
-                    />
-                    <Tooltip content={<CustomTooltip />} />
-                    <ReferenceLine 
-                      y={75} 
-                      stroke="#22c55e" 
-                      strokeDasharray="3 3" 
-                      label={{ 
-                        value: "Required (75%)", 
-                        position: "right",
-                        fill: "#22c55e",
-                        fontSize: 12
-                      }} 
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="attendance"
-                      stroke="#3b82f6"
-                      strokeWidth={2}
-                      fill="url(#colorAttendance)"
-                      dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
-                      activeDot={{ r: 6, fill: '#2563eb' }}
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          </CarouselItem>
+  const averageAttendance = attendanceData.reduce((acc, curr) => acc + curr.value, 0) / attendanceData.length
 
-          {/* Speedometer Gauge */}
-          <CarouselItem className="h-full">
-            <div className="h-full w-full flex flex-col items-center justify-center p-4">
-              <div className="mb-4 text-base font-medium text-gray-600">Overall Attendance</div>
-              <SpeedometerGauge value={averageAttendance} />
-              <div className="mt-6 space-y-2 w-full max-w-xs">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Classes Attended</span>
-                  <span className="font-medium">{Math.round(averageAttendance * 0.42)}/42</span>
-                </div>
-                <Progress value={averageAttendance} className="h-2" />
-                <div className="text-xs text-gray-500 text-center mt-1">
-                  Minimum Required: 75%
-                </div>
+  return (
+    <div className="grid grid-cols-2 gap-4">
+      {/* Left side - Weekly Overview */}
+      <div className="space-y-2.5">
+        {attendanceData.map((day, index) => (
+          <div key={day.day} className="space-y-0.5">
+            <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center gap-1.5">
+                {getStatusIcon(day.status)}
+                <span className="font-medium">{day.day}</span>
               </div>
+              <span className={`${getStatusColor(day.status)} text-[10px]`}>{day.status}</span>
             </div>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious className="left-2" />
-        <CarouselNext className="right-2" />
-      </Carousel>
+            <Progress value={day.value} className="h-1" />
+          </div>
+        ))}
+        
+        {/* Overall Stats */}
+        <div className="grid grid-cols-3 gap-2 text-center pt-2 border-t">
+          <div>
+            <div className="text-lg font-bold text-green-600">3</div>
+            <div className="text-[10px] text-muted-foreground">Present</div>
+          </div>
+          <div>
+            <div className="text-lg font-bold text-yellow-600">1</div>
+            <div className="text-[10px] text-muted-foreground">Late</div>
+          </div>
+          <div>
+            <div className="text-lg font-bold text-red-600">1</div>
+            <div className="text-[10px] text-muted-foreground">Absent</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right side - Gauge */}
+      <div className="flex flex-col items-center justify-between">
+        <Gauge value={Math.round(averageAttendance)} size="sm" />
+        <div className="w-full space-y-0.5 text-center">
+          <div className="text-[10px] text-muted-foreground">
+            Required: 75%
+          </div>
+          <Progress value={75} className="h-1 bg-green-100">
+            <div className="h-full bg-green-600 transition-all" style={{ width: '75%' }} />
+          </Progress>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function AttendanceChartCompact() {
+  const averageAttendance = attendanceData.reduce((acc, curr) => acc + curr.value, 0) / attendanceData.length
+
+  return (
+    <div className="space-y-4">
+      {/* Weekly Overview */}
+      <div className="space-y-2.5">
+        {attendanceData.map((day, index) => (
+          <div key={day.day} className="space-y-0.5">
+            <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center gap-1.5">
+                {getStatusIcon(day.status)}
+                <span className="font-medium">{day.day}</span>
+              </div>
+              <span className={`${getStatusColor(day.status)} text-[10px]`}>{day.status}</span>
+            </div>
+            <Progress value={day.value} className="h-1" />
+          </div>
+        ))}
+      </div>
+
+      {/* Overall Stats */}
+      <div className="border-t pt-3">
+        <div className="grid grid-cols-3 gap-2 text-center mb-3">
+          <div>
+            <div className="text-lg font-bold text-green-600">3</div>
+            <div className="text-[10px] text-muted-foreground">Present</div>
+          </div>
+          <div>
+            <div className="text-lg font-bold text-yellow-600">1</div>
+            <div className="text-[10px] text-muted-foreground">Late</div>
+          </div>
+          <div>
+            <div className="text-lg font-bold text-red-600">1</div>
+            <div className="text-[10px] text-muted-foreground">Absent</div>
+          </div>
+        </div>
+
+        <div className="space-y-0.5">
+          <div className="flex justify-between text-xs">
+            <span className="text-muted-foreground">Overall</span>
+            <span className="font-medium">{Math.round(averageAttendance)}%</span>
+          </div>
+          <Progress value={averageAttendance} className="h-1" />
+          <div className="flex justify-between text-[10px] text-muted-foreground">
+            <span>Required: 75%</span>
+            <span>Current: {Math.round(averageAttendance)}%</span>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,4 +1,7 @@
+'use client'
+
 import Link from "next/link"
+import { useRouter } from 'next/navigation'
 import { type LucideIcon } from 'lucide-react'
 
 import { cn } from "@/lib/utils"
@@ -8,9 +11,19 @@ interface NavItemProps {
   icon: LucideIcon
   label: string
   isActive?: boolean
+  onClick?: () => void
 }
 
-export function NavItem({ href, icon: Icon, label, isActive }: NavItemProps) {
+export function NavItem({ href, icon: Icon, label, isActive, onClick }: NavItemProps) {
+  const router = useRouter()
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (onClick) {
+      e.preventDefault()
+      onClick()
+    }
+  }
+
   return (
     <Link
       href={href}
@@ -24,6 +37,7 @@ export function NavItem({ href, icon: Icon, label, isActive }: NavItemProps) {
           "before:w-[5px] before:bg-[#df292c]"
         ]
       )}
+      onClick={handleClick}
     >
       <Icon className="mr-3 h-5 w-5" />
       {label}

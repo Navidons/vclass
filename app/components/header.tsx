@@ -2,6 +2,7 @@
 
 import { Bell, Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
+import { useRouter } from 'next/navigation'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,12 +20,18 @@ interface HeaderProps {
 }
 
 export function Header({ studentName, registrationNumber }: HeaderProps) {
+  const router = useRouter()
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const handleLogout = () => {
+    // Add any logout logic here (clear session, cookies, etc.)
+    router.push('/')
+  }
 
   const initials = studentName
     .split(' ')
@@ -87,19 +94,24 @@ export function Header({ studentName, registrationNumber }: HeaderProps) {
           {/* User Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Avatar className="border-2 border-blue-950/30">
+              <Avatar className="border-2 border-blue-950/30 cursor-pointer hover:opacity-80">
                 <AvatarImage src="/avatars/student.jpg" alt={studentName} />
                 <AvatarFallback className="bg-blue-950/30 text-blue-200">{initials}</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Profile</DropdownMenuItem>
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600">Log out</DropdownMenuItem>
+              <DropdownMenuItem 
+                className="text-red-500 focus:text-red-500 cursor-pointer"
+                onClick={handleLogout}
+              >
+                Log out
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
